@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>學生、課程與成績管理系統</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="team003.css">
+</head>
+<body>
+
+<div class="header">
+    <h1>學生、課程與成績管理系統</h1>
+</div>
+
+<div class="nav-bar">
+    <button id="nav-student" class="active" onclick="showSection('student')">學生管理</button>
+    <button id="nav-course" onclick="showSection('course')">課程管理</button>
+    <button id="nav-grade" onclick="showSection('grade')">課程成績管理</button>
+</div>
+
+<div id="student-section" class="content-section">
+    <h2>學生列表</h2>
+    <div class="controls">
+        <div class="filter-field">
+            <label for="deptFilter">依科系篩選</label>
+            <select id="deptFilter">
+                <option value="">全部科系</option>
+                <option value="資訊工程學系">資訊工程學系</option>
+                <option value="電機工程學系">電機工程學系</option>
+                <option value="工業工程與管理學系">工業工程與管理學系</option>
+                <option value="應用數學系">應用數學系</option>
+                <option value="統計學系">統計學系</option>
+            </select>
+        </div>
+        <div class="control-actions">
+            <button class="btn-primary" onclick="openStudentModal()">新增學生</button>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>學號</th><th>姓名</th><th>年級</th><th>科系</th><th>操作</th></tr>
+            </thead>
+            <tbody id="studentTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="course-section" class="content-section" style="display:none;">
+    <h2>課程列表</h2>
+    <div class="controls">
+        <div class="filter-field">
+            <label for="courseTeacherFilter">授課老師</label>
+            <select id="courseTeacherFilter">
+                <option value="">全部老師</option>
+                <option value="陳老師">陳老師</option>
+                <option value="李老師">李老師</option>
+                <option value="黃老師">黃老師</option>
+                <option value="王老師">王老師</option>
+                <option value="林老師">林老師</option>
+            </select>
+        </div>
+        <div class="filter-field search-field">
+            <label for="courseSearch">課程關鍵字</label>
+            <input type="text" id="courseSearch" placeholder="例如：資料庫">
+        </div>
+        <div class="control-actions">
+            <button class="btn-secondary" onclick="loadCourses()">查詢</button>
+            <button class="btn-primary" onclick="openCourseModal()">新增課程</button>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>課程代號</th><th>課程名稱</th><th>學分</th><th>授課老師</th><th>選課人數</th><th>平均成績</th><th>操作</th></tr>
+            </thead>
+            <tbody id="courseTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="course-detail-section" class="content-section" style="display:none;">
+    <div class="section-heading">
+        <div>
+            <h2 id="detailCourseTitle">課程選修學生</h2>
+            <p id="detailTeacherName">授課老師</p>
+        </div>
+        <button class="btn-quiet" onclick="backToCourseList()">返回課程列表</button>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>學號</th><th>學生姓名</th><th>成績</th></tr>
+            </thead>
+            <tbody id="detailTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="grade-section" class="content-section" style="display:none;">
+    <h2>學生選修課程與成績列表</h2>
+    <div class="controls">
+        <div class="filter-field">
+            <label for="gradeSName">學生姓名</label>
+            <input type="text" id="gradeSName" placeholder="輸入姓名">
+        </div>
+        <div class="filter-field">
+            <label for="gradeTeacherFilter">授課老師</label>
+            <select id="gradeTeacherFilter"><option value="">全部老師</option></select>
+        </div>
+        <div class="filter-field">
+            <label for="gradeCourseFilter">課程名稱</label>
+            <select id="gradeCourseFilter"><option value="">全部課程</option></select>
+        </div>
+        <div class="control-actions">
+            <button class="btn-secondary" onclick="loadGrades()">查詢</button>
+            <button class="btn-primary" onclick="openGradeModal()">新增修課成績</button>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>學號</th><th>學生姓名</th><th>課程代號</th><th>課程名稱</th><th>授課老師</th><th>成績</th><th>操作</th></tr>
+            </thead>
+            <tbody id="gradeTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modalOverlay" class="modal-overlay" style="display:none;">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <h3 id="modalTitle">標題</h3>
+        <div id="modalContent"></div>
+        <div id="modalActions" class="modal-actions">
+            <button class="btn-quiet" onclick="closeModal()">關閉</button>
+        </div>
+    </div>
+</div>
+
+<script src="team003.js"></script>
+</body>
+</html>
